@@ -1,11 +1,16 @@
 // check that only numbers are entered
-function checkNumber() { 
-let testStr = document.getElementById("player-input").value;
+function checkNumber() {
+	let testStr = document.getElementById('player-input').value;
 
-if( isNaN( Number(testStr) ) ) {
-	alert(testStr + " is not a number. Please enter a valid number between 1 and 100."); 
+	if (isNaN(Number(testStr))) {
+		document.getElementById('player-input').value = '';
+		document.getElementById('player-input').select();
+		alert(
+			testStr +
+				' is not a number. Please enter a valid number between 1 and 100.'
+		);
 	}
-};
+}
 
 // *********************************
 /*
