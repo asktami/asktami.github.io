@@ -1,3 +1,13 @@
+// check that only numbers are entered
+function checkNumber() { 
+let testStr = document.getElementById("player-input").value;
+
+if( isNaN( Number(testStr) ) ) {
+	alert(testStr + " is not a number. Please enter a valid number between 1 and 100."); 
+	}
+};
+
+// *********************************
 /*
 
 Write your guess-game code here! Don't forget to look at the test specs as a guide. You can run the specs
