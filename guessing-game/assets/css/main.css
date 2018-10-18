@@ -1,16 +1,41 @@
-html {
-	font-size: 14px;
-}
-@media (min-width: 768px) {
-	html {
-		font-size: 16px;
-	}
-}
 body {
-	padding-top: 3rem;
-	padding-bottom: 3rem;
-	color: #5a5a5a;
+    font-family: 'Overpass', sans-serif;
+    font-size: 17px;
 	text-align: center;
+}
+
+.container {
+	max-width: 960px;
+}
+
+footer {
+    font-size: 14px;
+	padding-top: 1px;
+	border-top: 5px solid #eee;
+	margin-top: 30px;
+}
+
+footer p {
+	margin-bottom: 0.125rem;
+	vertical-align: top;
+}
+
+
+h1 {
+font-family: 'Permanent Marker', cursive;
+font-size: 55px;
+}
+
+.won{
+    background-image: url('fireworks.gif'); 
+}
+.lost{
+    display: none;
+    width: 528px;
+    height: 292px;
+    position: absolute;
+    top: -10px;
+    left: -185px;
 }
 
 /* center text in input fields */
@@ -21,52 +46,68 @@ input {
 	text-align: center;
 }
 
-.container {
-	max-width: 960px;
+ul {
+  list-style: none;
+  padding: 0;
 }
 
-.border-top {
-	border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-	border-bottom: 1px solid #e5e5e5;
-}
-
-:root {
-	--jumbotron-padding-y: 3rem;
-}
-
-.jumbotron {
-	padding-top: var(--jumbotron-padding-y);
-	padding-bottom: var(--jumbotron-padding-y);
-	margin-bottom: 0;
-	background-color: #fff;
-}
-@media (min-width: 768px) {
-	.jumbotron {
-		padding-top: calc(var(--jumbotron-padding-y) * 2);
-		padding-bottom: calc(var(--jumbotron-padding-y) * 2);
-	}
+/* each guess li */
+.guess {
+  display: inline;
+  border: 2px solid gray;
+  border-radius: 10%;
+  font-size: 40px;
+  margin: 5px;
+  padding: 0 25px;
+  box-shadow: 2px 2px 2px darkgray;
+  background-color: white;
 }
 
-.jumbotron p:last-child {
-	margin-bottom: 0;
+input:focus,
+textarea:focus,
+.btn:focus,
+.btn:active {
+  outline: none;
+  box-shadow: none;
 }
 
-.jumbotron-heading {
-	font-weight: 300;
+#player-input-section {
+  width: max-content;
+  width: -moz-max-content;   
+  width: -webkit-max-content;
+  margin: 1.5em auto;
+  position: relative;
+}
+#player-input {
+  font-size: 3.5em;
+  border-radius: 50%;
+  width: 3.3em;
+  height: 3.3em;
+  border: inset hsla(45, 55%, 65%, 0.75) 5px;
+  background: #f9f5ec;
+  color: hsla(128, 20%, 46%, 1);
+  padding: 0.3em;
+  box-shadow: 2px 4px 100px -13px #9f927acc;
+  }
+  
+input#player-input:disabled {
+  border-color: lightgrey;
+  background: hsl(0, 0%, 91%);
 }
 
-.jumbotron .container {
-	max-width: 40rem;
+#action-submit {
+    border-radius: 50% 50% 10%;
+    font-size: 1.3em;
+    width: 3em;
+    height: 3em;
+    position: absolute;
+    right: -1em;
+    top: 5.5em;
 }
 
-footer {
-	padding-top: 3rem;
-	padding-bottom: 3rem;
-}
-
-footer p {
-	margin-bottom: 0.25rem;
-	vertical-align: top;
+#hint {
+  border: 1px solid black;
+  margin: 20px;
+  border-radius: 10px;
+  display: none;
 }
