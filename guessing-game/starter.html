@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="assets/images/favicon.ico">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+	<!-- Custom styles -->
+	<link href="assets/css/main.css" rel="stylesheet">
+
+	<title>Play the Guessing Game!</title>
+</head>
+
+<body>
+
+	<!--
+https://stackoverflow.com/questions/4781077/html5-best-practices-section-header-aside-article-elements
+
+https://www.w3schools.com/html/html5_migration.asp
+
+The <header> element specifies a header for a document or section.
+The <header> element should be used as a container for introductory content.
+You can have several <header> elements in one document.
+-->
+	<header role="banner">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+			<a class="navbar-brand" href="#">Welcome</a>
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
+			 aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+				</ul>
+			</div>
+
+		</nav>
+	</header>
+
+	<!--
+main = main page content, only used once per page, is like "body"
+can’t be used as a descendant of an <article>, <aside>, <footer>, <header>, or <nav> element.
+-->
+	<main id="content" role="main">
+		<div class="container">
+
+			<!-- Main jumbotron for a primary marketing message or call to action -->
+			<section class="jumbotron text-center">
+
+				<h1 class="display-4">Guessing Game</h1>
+				<h2 class="display-5">Can you guess the secret number?</h2>
+				<p class="lead">Enter a number between 1 and 100!</p>
+
+				<p>
+					<input type='text' placeholder='#' maxlength='3' size='3'>&nbsp;&nbsp;<a href="
+					 #" class="btn btn-primary">Guess!</a>
+				</p>
+
+				<p>The rules are simple.<br>
+					You will have to guess a number between 1 and 100.<br>
+					You will have 5 chances, if you guess the correct number you win the game!"</p>
+			</section>
+
+			<!-- unordered list of guesses -->
+			<ul id='guesses'>
+				<li id='g1'></li>
+				<li id='g2'></li>
+				<li id='g3'></li>
+				<li id='g4'></li>
+				<li id='g5'></li>
+			</ul>
+
+			<!-- reset and hint buttons -->
+			<button type="button" class="btn btn-secondary">Reset</button>
+			<button type="button" class="btn btn-info">Hint</button>
+
+		</div><!-- end container -->
+	</main><!-- end main -->
+
+
+	<footer class="text-muted">
+		<div class="container">
+
+			<div class="row center">
+				<div class="col-sm-4">
+					<img alt="Fullstack logo" src="./img/fa-logo@2x.png" />
+				</div>
+
+				<div class="col-sm-4">
+					<p>Created by: Tami Williams</p>
+					<p>Find out more about me at <a href="http://www.asktami.com">www.asktami.com</a>.</p>
+				</div>
+
+				<div class="col-sm-4">
+					<img alt="Grace Hopper logo" src="./img/grace_hopper_academy.png">
+					<p><a href="#">Back to top</a></p>
+				</div>
+			</div> <!-- end row -->
+		</div><!-- end footer container -->
+	</footer>
+
+
+	<!-- Bootstrap Core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="assets/js/jquery-3.3.1.slim.min.js"></script>
+	<!-- bootstrap.bundle.min.js includes Popper -->
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<!-- holder.js to render image placeholders (renamed holder.min.js)  -->
+	<script src="assets/js/holder.js"></script>
+
+	<script src="assets/js/guessingGame.js"></script>
+
+</body>
+
+</html>
