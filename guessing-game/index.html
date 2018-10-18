@@ -7,7 +7,7 @@
 	<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 	<meta name='description' content=''>
 	<meta name='author' content=''>
-	
+
 	<title>Javascript Guessing Game</title>
 
 	<!-- Bootstrap CSS -->
@@ -15,9 +15,9 @@
 
 	<!-- Custom styles -->
 	<link rel='stylesheet' href='assets/css/main.css'>
-	
-	 <!-- import google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Overpass|Permanent+Marker" rel="stylesheet">
+
+	<!-- import google fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Overpass|Permanent+Marker" rel="stylesheet">
 </head>
 
 <body>
@@ -29,34 +29,34 @@
 				<h2 class='display-5'>Can you guess the secret number?</h2>
 				<p class='lead'>Enter a number between 1 and 100!</p>
 			</div>
-			<div id='remaining-guesses'>remaining guesses</div>
-				
+
+
 			<p id='player-input-section'>
-				<input id='player-input' type='text' placeholder='#' size='3'  maxlength='3' pattern='[0-9]{3}' autofocus='autofocus' onBlur='checkNumber()'> 
-			<button class='btn btn-primary' id='action-submit'>Go!</button>
+				<input id='player-input' type='text' placeholder='#' size='3' maxlength='3' autofocus='autofocus'>
+				<button class='btn btn-primary' id='btn-submit'>Guess!</button>
 			</p>
 
-				<p>The rules are simple.<br>
-					You have 5 chances to guess a number between 1 and 100.<br>
-					If you guess the correct number you win the game!</p>
-			
+			<p>The rules are simple.<br>
+				You have 5 chances to guess a number between 1 and 100.<br>
+				If you guess the correct number you win the game!</p>
+
 			<!-- unordered list of guesses -->
 			<ul id='guess-list'>
-				<li class='guess'>-</li>
-				<li class='guess'>-</li>
-				<li class='guess'>-</li>
-				<li class='guess'>-</li>
-				<li class='guess'>-</li>
+				<li class='guess default'>-</li>
+				<li class='guess default'>-</li>
+				<li class='guess default'>-</li>
+				<li class='guess default'>-</li>
+				<li class='guess default'>-</li>
 			</ul>
 
 			<!-- reset and hint buttons -->
-			<button class='btn btn-secondary' id='action-reset'>Reset</button>
-			<button class='btn btn-info' id='action-hint'>Get Hint</button>
-			
-			
+			<button class='btn btn-secondary' id='btn-reset'>Reset</button>
+			<button class='btn btn-info' id='btn-hint'>Get Hint</button>
+
+
 			<!-- hint -->
-			<div id='hint'>hint</div>
-			
+			<div id='hint'></div>
+
 
 		</div><!-- end container -->
 	</main><!-- end main -->
@@ -66,7 +66,7 @@
 		<div class='container'>
 			<div class='row align-items-center'>
 				<div class='col-sm-4'>
-					<img alt='fullstack-academy' src='assets/images/fullstack-academy.png' width='200' align='top'/>
+					<img alt='fullstack-academy' src='assets/images/fullstack-academy.png' width='200' align='top' />
 				</div>
 
 				<div class='col-sm-4'>
@@ -78,7 +78,7 @@
 					<img alt='grace-hopper' src='assets/images/grace-hopper.png' width='200' />
 				</div>
 			</div><!-- end row -->
-			
+
 		</div><!-- end footer container -->
 	</footer>
 
@@ -93,4 +93,5 @@
 	<script src='assets/js/guessing-game.js'></script>
 
 </body>
+
 </html>
