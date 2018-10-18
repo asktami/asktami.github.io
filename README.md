@@ -1,3 +1,1 @@
-# asktami.github.io
-
-Miscellaneous Javascrpt projects at https://asktami.github.io
+# Miscellaneous Javascript projects at https://asktami.github.io
