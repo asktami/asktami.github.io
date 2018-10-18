@@ -1,3 +1,3 @@
-# GitHub Pages
+# Demo Projects
 
-- https://github.com/asktami/asktami.github.io/blob/master/guessing-game/index.html
+[Fullstack Academy Guessing Game](httpshttps://github.com/asktami/asktami.github.io/blob/master/guessing-game/index.html)
