@@ -79,15 +79,17 @@ textarea:focus,
   position: relative;
 }
 #player-input {
-  font-size: 3.5em;
+  color: #DC143C;
+  font-size: 60px;
   border-radius: 50%;
-  width: 3.3em;
-  height: 3.3em;
-  border: inset hsla(45, 55%, 65%, 0.75) 5px;
-  background: #f9f5ec;
-  color: hsla(128, 20%, 46%, 1);
-  padding: 0.3em;
-  box-shadow: 2px 4px 100px -13px #9f927acc;
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  background: #fff;
+  border: inset pink 5px;
+-webkit-box-shadow: 20px 16px 58px 11px rgba(245,223,220,1);
+-moz-box-shadow: 20px 16px 58px 11px rgba(245,223,220,1);
+box-shadow: 20px 16px 58px 11px rgba(245,223,220,1);
   }
   
 input#player-input:disabled {
@@ -97,12 +99,12 @@ input#player-input:disabled {
 
 #action-submit {
     border-radius: 50% 50% 10%;
-    font-size: 1.3em;
-    width: 3em;
-    height: 3em;
+    font-size: 20px;
+    width: 60px;
+    height: 60px;
     position: absolute;
-    right: -1em;
-    top: 5.5em;
+    right: -20px;
+    top: 100px;
 }
 
 #hint {
