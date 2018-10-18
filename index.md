@@ -1,3 +1,3 @@
 # Demo Projects
 
-[Guessing Game](https://github.com/asktami/asktami.github.io/blob/master/guessing-game/index.html "Fullstack Academy Guessing Game")
+[Guessing Game](https://asktami.github.io/guessing-game/ "Fullstack Academy Guessing Game")
