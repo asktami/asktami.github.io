@@ -66,6 +66,7 @@ ul {
 	-moz-box-shadow: 0px 0px 10px 5px #d71c03;
 	box-shadow: 0px 0px 10px 5px #d71c03;
 }
+
 input:focus,
 textarea:focus,
 .btn:focus,
@@ -95,11 +96,6 @@ textarea:focus,
 	box-shadow: 25px 10px 60px 0px rgb(122, 253, 0);
 }
 
-input#player-input:disabled {
-	border-color: #d3d3d3;
-	background: #e8e8e8;
-}
-
 #btn-submit {
 	border-radius: 10% 50% 50%;
 	font-size: 20px;
@@ -111,11 +107,16 @@ input#player-input:disabled {
 }
 
 #hint {
+	border-radius: 10px;
 	border: 1px solid black;
 	margin: 50px;
-	border-radius: 10px;
+	display: none;
 }
 
-/* prevent entry/button click */
-.disable {
+/* change disabled box-shadow color to gray */
+#player-input:disabled {
+	border: inset gray 5px;
+	-webkit-box-shadow: 25px 10px 60px 0px gray;
+	-moz-box-shadow: 25px 10px 60px 0px gray;
+	box-shadow: 25px 10px 60px 0px gray;
 }
