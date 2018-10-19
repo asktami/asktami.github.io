@@ -49,13 +49,6 @@ class Game {
 		this.winningNumber = generateWinningNumber();
 	}
 
-	// reset() {
-	// 	// reset all game variable
-	// 	this.playersGuess = null;
-	// 	this.pastGuesses = [];
-	// 	this.winningNumber = generateWinningNumber();
-	// }
-
 	difference() {
 		return Math.abs(this.playersGuess - this.winningNumber);
 	}
