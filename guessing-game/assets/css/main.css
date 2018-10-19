@@ -115,6 +115,7 @@ textarea:focus,
 
 /* change disabled box-shadow color to gray */
 #player-input:disabled {
+	color: black;
 	border: inset gray 5px;
 	-webkit-box-shadow: 25px 10px 60px 0px gray;
 	-moz-box-shadow: 25px 10px 60px 0px gray;
