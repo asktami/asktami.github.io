@@ -74,42 +74,34 @@ class Game {
 		let feedback = '';
 		let color = 'cold';
 
-		if (this.difference() < 100) {
-			feedback = "You're ice cold!";
-		}
-
-		if (this.difference() < 50) {
-			feedback = "You're a bit chilly.";
-		}
-
-		if (this.difference() < 25) {
-			feedback = "You're lukewarm.";
-			color = 'warm';
-		}
-
-		if (this.difference() < 10) {
-			feedback = "You're burning up!";
-			color = 'warm';
-		}
-
 		if (this.pastGuesses.includes(this.playersGuess)) {
 			feedback = 'You have already guessed that number.';
-		}
-
-		// if playersGuess isn't the winningNumber or a duplicate, add it to pastGuesses
-		if (!feedback.includes('already')) {
+		} else {
 			this.pastGuesses.push(this.playersGuess);
-		}
-
-		if (this.playersGuess === this.winningNumber) {
-			feedback = 'You Win!';
-		} else if (this.pastGuesses.length === 5) {
-			feedback =
-				'You Lose.<br>The winning number was ' + this.winningNumber + '.';
+			if (this.playersGuess === this.winningNumber) {
+				feedback = 'You Won!';
+				color = 'won';
+			} else if (this.pastGuesses.length === 5) {
+				feedback =
+					'You Lose.<br>The winning number was ' + this.winningNumber + '.';
+			} else {
+				let diff = this.difference();
+				if (diff < 10) {
+					feedback = "You're burning up!";
+					color = 'warm';
+				} else if (diff < 25) {
+					feedback = "You're lukewarm.";
+					color = 'warm';
+				} else if (diff < 50) {
+					feedback = "You're a bit chilly.";
+				} else {
+					feedback = "You're ice cold!";
+				}
+			}
 		}
 
 		// disable more input if have 5 guesses or have won
-		if (this.pastGuesses.length === 5 || feedback.includes('won')) {
+		if (this.pastGuesses.length === 5 || feedback === 'You Won!') {
 			// disable player-input & submit btns
 			document.getElementById('player-input').disabled = true;
 			document.getElementById('btn-submit').disabled = true;

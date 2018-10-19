@@ -66,6 +66,13 @@ ul {
 	-moz-box-shadow: 0px 0px 10px 5px #d71c03;
 	box-shadow: 0px 0px 10px 5px #d71c03;
 }
+.won {
+	color: darkgreen;
+	border: inset lightgreen 5px;
+	-webkit-box-shadow: 25px 10px 60px 0px rgb(122, 253, 0);
+	-moz-box-shadow: 25px 10px 60px 0px rgb(122, 253, 0);
+	box-shadow: 25px 10px 60px 0px rgb(122, 253, 0);
+}
 
 input:focus,
 textarea:focus,
