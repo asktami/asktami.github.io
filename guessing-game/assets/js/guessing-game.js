@@ -58,7 +58,7 @@ class Game {
 	}
 
 	playersGuessSubmission(num) {
-		if (isNaN(Number(num)) || typeof num !== 'number' || num < 1 || num > 100) {
+		if (isNaN(Number(num)) || num < 1 || num > 100) {
 			document.getElementById('subhead').innerHTML = '';
 			document.getElementById('instructions').innerHTML = '';
 			return 'That is an invalid guess.';
@@ -71,7 +71,7 @@ class Game {
 	// The last spec specifies that playersGuessSubmission should call checkGuess
 	// playersGuessSubmission should also return that call, so that the return value of playersGuessSubmissions is the return value of checkGuess.
 	checkGuess() {
-		let feedback = '';
+		let feedback;
 		let color = 'cold';
 
 		if (this.pastGuesses.includes(this.playersGuess)) {
@@ -81,9 +81,6 @@ class Game {
 			if (this.playersGuess === this.winningNumber) {
 				feedback = 'You Won!';
 				color = 'won';
-			} else if (this.pastGuesses.length === 5) {
-				feedback =
-					'You Lose.<br>The winning number was ' + this.winningNumber + '.';
 			} else {
 				let diff = this.difference();
 				if (diff < 10) {
@@ -97,6 +94,11 @@ class Game {
 				} else {
 					feedback = "You're ice cold!";
 				}
+			}
+
+			if (this.pastGuesses.length === 5) {
+				feedback =
+					'You Lose.<br>The winning number was ' + this.winningNumber + '.';
 			}
 		}
 
@@ -205,7 +207,9 @@ btnHint.addEventListener('click', function() {
 	hintCount++;
 
 	if (hintCount === 1) {
-		hint.textContent = `The winning number is one of: ${game.provideHint()}`;
+		hint.textContent = `The winning number is: ${game
+			.provideHint()
+			.join(' or ')}`;
 		hint.style.display = 'block';
 		btnHint.disabled = true;
 	}
