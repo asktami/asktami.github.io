@@ -96,7 +96,7 @@ class Game {
 				}
 			}
 
-			if (this.pastGuesses.length === 5) {
+			if (this.pastGuesses.length === 5 && feedback !== 'You Won!') {
 				feedback =
 					'You Lose.<br>The winning number was ' + this.winningNumber + '.';
 			}
