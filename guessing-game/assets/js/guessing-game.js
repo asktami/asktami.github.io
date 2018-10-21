@@ -96,6 +96,7 @@ class Game {
 				}
 			}
 
+			// moved Lose here so can display color on last entry
 			if (this.pastGuesses.length === 5 && feedback !== 'You Won!') {
 				feedback =
 					'You Lose.<br>The winning number was ' + this.winningNumber + '.';
