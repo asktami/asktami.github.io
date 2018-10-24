@@ -1,6 +1,7 @@
-// *********************************
-// GLOBAL FUNCTIONS
-// *********************************
+/*
+// QUESTION: Why can't I get the invalid guess to display if I use throw?  ---- invalid guess
+*/
+
 // to get a random integer between two values
 function getRandomInt(min, max) {
 	min = Math.ceil(min);
@@ -37,15 +38,12 @@ function shuffle(array) {
 	return array;
 }
 
-// *********************************
-// GAME class
-// *********************************
+// Game class
 // should have a playersGuess property, and a pastGuesses property
 // playersGuess property is what will hold the player's number guess
 // pastGuesses will be an array, and holds all of the player's past guesses
 class Game {
 	constructor() {
-		this.hintCount = 0;
 		this.playersGuess = null;
 		this.pastGuesses = [];
 		this.winningNumber = generateWinningNumber();
@@ -60,7 +58,9 @@ class Game {
 	}
 
 	playersGuessSubmission(num) {
-		if (isNaN(num) || num < 1 || num > 100) {
+		if (isNaN(Number(num)) || num < 1 || num > 100) {
+			document.getElementById('subhead').innerHTML = '';
+			document.getElementById('instructions').innerHTML = '';
 			return 'That is an invalid guess.';
 		} else {
 			this.playersGuess = num;
@@ -72,7 +72,6 @@ class Game {
 	// playersGuessSubmission should also return that call, so that the return value of playersGuessSubmissions is the return value of checkGuess.
 	checkGuess() {
 		let feedback;
-		let feedback2 = this.isLower() ? 'Guess higher.' : 'Guess lower.';
 		let color = 'cold';
 
 		if (this.pastGuesses.includes(this.playersGuess)) {
@@ -81,14 +80,15 @@ class Game {
 			this.pastGuesses.push(this.playersGuess);
 			if (this.playersGuess === this.winningNumber) {
 				feedback = 'You Won!';
-				feedback2 = 'Want to play again?';
 				color = 'won';
 			} else {
 				let diff = this.difference();
 				if (diff < 10) {
 					feedback = "You're burning up!";
+					color = 'warm';
 				} else if (diff < 25) {
 					feedback = "You're lukewarm.";
+					color = 'warm';
 				} else if (diff < 50) {
 					feedback = "You're a bit chilly.";
 				} else {
@@ -96,44 +96,41 @@ class Game {
 				}
 			}
 
-			if (feedback.includes('burning') || feedback.includes('lukewarm'))
-				color = 'warm';
-
 			// moved Lose here so can display color on last entry
 			if (this.pastGuesses.length === 5 && feedback !== 'You Won!') {
-				feedback = 'You Lose.';
-				feedback2 = 'The winning number was ' + this.winningNumber + '.';
+				feedback =
+					'You Lose.<br>The winning number was ' + this.winningNumber + '.';
 			}
-
-			// disable player-input & submit btns if have 5 guesses or have won
-			if (this.pastGuesses.length === 5 || feedback === 'You Won!') {
-				document.getElementById('player-input').disabled = true;
-				document.getElementById('btn-submit').disabled = true;
-				document.getElementById('btn-hint').disabled = true;
-			}
-
-			// *****************
-			// dispay feedback in the DOM
-			// *****************'
-			document.querySelector('#header').innerHTML =
-				"<h1 class='display-4'>" + feedback + '</h1>';
-			document.getElementById('subhead').innerHTML =
-				"<h2 class='display-5'>" + feedback2 + '</h2>';
-
-			// display player guesses
-			document.querySelector(
-				`#guess-list li:nth-child(${this.pastGuesses.length})`
-			).textContent = this.playersGuess;
-
-			// change guess li border/background color to warm/cold
-			document
-				.querySelector(`#guess-list li:nth-child(${this.pastGuesses.length})`)
-				.classList.remove('default');
-
-			document
-				.querySelector(`#guess-list li:nth-child(${this.pastGuesses.length})`)
-				.classList.add(color);
 		}
+
+		// disable more input if have 5 guesses or have won
+		if (this.pastGuesses.length === 5 || feedback === 'You Won!') {
+			// disable player-input & submit btns
+			document.getElementById('player-input').disabled = true;
+			document.getElementById('btn-submit').disabled = true;
+			document.getElementById('btn-hint').disabled = true;
+		}
+
+		// *****************
+		// dispay feedback in the DOM
+		// *****************'
+		document.querySelector('#header').innerHTML =
+			"<h1 class='display-4'>" + feedback + '</h1>';
+		document.getElementById('subhead').innerHTML = '';
+		document.getElementById('instructions').innerHTML = '';
+
+		document.querySelector(
+			`#guess-list li:nth-child(${this.pastGuesses.length})`
+		).textContent = this.playersGuess;
+
+		// change guess li border/background color to warm/cold
+		document
+			.querySelector(`#guess-list li:nth-child(${this.pastGuesses.length})`)
+			.classList.remove('default');
+
+		document
+			.querySelector(`#guess-list li:nth-child(${this.pastGuesses.length})`)
+			.classList.add(color);
 
 		return feedback;
 	}
@@ -153,15 +150,17 @@ class Game {
 	}
 }
 
-// *********************************
-// START PLAYING GAME
-// *********************************
-let game = newGame();
-
-// create a new game instance
+// returns a new game instance
 function newGame() {
 	return new Game();
 }
+
+// *********************************
+// play game
+// *********************************
+
+let game = newGame();
+let hintCount = 0;
 
 // *********************************
 // Event Listeners
@@ -176,7 +175,6 @@ function processNumber() {
 	// get guessed number out of player-input
 	let playerInput = document.getElementById('player-input');
 
-	// =+ casts playersGuess as a number
 	let playersGuess = +playerInput.value;
 
 	let inputResult = game.playersGuessSubmission(playersGuess);
@@ -191,7 +189,9 @@ function processNumber() {
 
 // when exit input field via enter on keyboard OR click submit button check for valid number & process
 const btnSubmit = document.getElementById('btn-submit');
-btnSubmit.addEventListener('click', processNumber);
+btnSubmit.addEventListener('click', function() {
+	processNumber();
+});
 
 // when exit input field via enter on keyboard
 const playerInput = document.getElementById('player-input');
@@ -205,17 +205,15 @@ const btnHint = document.getElementById('btn-hint');
 const hint = document.getElementById('hint');
 btnHint.addEventListener('click', function() {
 	// when click get hint, only show 1x
-	if (game.hintCount === 0) {
+	hintCount++;
+
+	if (hintCount === 1) {
 		hint.textContent = `The winning number is: ${game
 			.provideHint()
 			.join(' or ')}`;
 		hint.style.display = 'block';
 		btnHint.disabled = true;
-
-		game.hintCount++;
 	}
-
-	document.getElementById('player-input').focus();
 });
 
 // when click reset
@@ -225,10 +223,10 @@ btnReset.addEventListener('click', function() {
 
 	let header = "<h1 class='display-4'>Guessing Game</h1>\r\n";
 	let subhead = "<h2 class='display-5'>Can you guess the secret number?</h2>";
-	// let instructions = "<p class='lead'>Enter a number between 1 and 100!</p>";
+	let instructions = "<p class='lead'>Enter a number between 1 and 100!</p>";
 	document.getElementById('header').innerHTML = header;
 	document.getElementById('subhead').innerHTML = subhead;
-	// document.getElementById('instructions').innerHTML = instructions;
+	document.getElementById('instructions').innerHTML = instructions;
 
 	const guesses = document.querySelectorAll('#guess-list li');
 	for (let i = 0; i < guesses.length; i++) {
@@ -242,6 +240,5 @@ btnReset.addEventListener('click', function() {
 
 	document.getElementById('hint').style.display = 'none';
 
-	playerInput.value = '';
-	document.getElementById('player-input').focus();
+	hintCount = 0;
 });
