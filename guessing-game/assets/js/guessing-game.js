@@ -225,10 +225,8 @@ btnReset.addEventListener('click', function() {
 
 	let header = "<h1 class='display-4'>Guessing Game</h1>\r\n";
 	let subhead = "<h2 class='display-5'>Can you guess the secret number?</h2>";
-	// let instructions = "<p class='lead'>Enter a number between 1 and 100!</p>";
 	document.getElementById('header').innerHTML = header;
 	document.getElementById('subhead').innerHTML = subhead;
-	// document.getElementById('instructions').innerHTML = instructions;
 
 	const guesses = document.querySelectorAll('#guess-list li');
 	for (let i = 0; i < guesses.length; i++) {
