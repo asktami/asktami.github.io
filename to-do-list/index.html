@@ -364,8 +364,12 @@ function deleteItem() {
   let idx_completed = data.completed.indexOf(item);
 
   // remove 1 item at that index
-data.active.splice(idx_active, 1);
-data.completed.splice(idx_completed, 1);
+  	if(idx_active !== -1){
+	data.active.splice(idx_active, 1);
+	}
+	if(idx_completed !== -1){
+		data.completed.splice(idx_completed, 1);
+	}
 
 
   dataObjectUpdate();
