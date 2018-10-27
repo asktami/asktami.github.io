@@ -1,6 +1,5 @@
 # To Do List
 
-To Do List(s) with Local Storage.
 Personal project to practice DOM manipulation and using localStorage.
 
 ## Future Changes
