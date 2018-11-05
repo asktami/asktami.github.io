@@ -265,8 +265,10 @@ function updateBadge(){
 
 
 // ADD ITEM
-document.getElementById('btn-Add').addEventListener('click', function () {
+document.getElementById('btn-Add').addEventListener('click', function (e) {
 
+  e.preventDefault();  // stops the default action, prevent a submit button from submitting a form, stops page from re-loading
+  
   let item = document.getElementById("newItem").value;
 
   if (item === '') {
@@ -279,6 +281,9 @@ document.getElementById('btn-Add').addEventListener('click', function () {
 	// create item
 	addItemToDOM(item);
   }
+  
+  document.getElementById("newItem").value = '';
+  document.getElementById('newItem').focus();
   
 });
 
