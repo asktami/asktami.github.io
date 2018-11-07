@@ -150,18 +150,18 @@ ul li.completed::before {
 
   <main role="main" class="container">
 
-    <h1>To Do List 
-    <button type="button" class="btn btn-info">
-  Active <span id="badge-active" class="badge badge-light"></span>
-  <span class="sr-only">active items</span>
-</button>
+    <h1>To Do List
+      <button type="button" class="btn btn-info">
+        Active <span id="badge-active" class="badge badge-light"></span>
+        <span class="sr-only">active items</span>
+      </button>
 
-<button type="button" class="btn btn-info">
-  Completed <span id="badge-completed" class="badge badge-light"></span>
-  <span class="sr-only">completed items</span>
-</button>
+      <button type="button" class="btn btn-info">
+        Completed <span id="badge-completed" class="badge badge-light"></span>
+        <span class="sr-only">completed items</span>
+      </button>
 
-    
+
     </h1>
     <h2>Using Vanilla Javascript and LocalStorage</h2>
     <p class="lead">LocalStorage: data with no expiration date that will persist after the browser window is closed.</p>
@@ -201,7 +201,7 @@ ul li.completed::before {
 
     <ul id="list" class="list-group"></ul>
 
-      <p>&nbsp;</p>
+    <p>&nbsp;</p>
   </main><!-- end main -->
 
 
@@ -243,181 +243,181 @@ ul li.completed::before {
     });
 
 
-// GLOBAL VARIABLES
-const list = document.querySelector('#list');
-let data = (localStorage.getItem('toDoList')) ? JSON.parse(localStorage.getItem('toDoList')):{
-active: [],
-completed: []
-};
+    // GLOBAL VARIABLES
+    const list = document.querySelector('#list');
+    let data = (localStorage.getItem('toDoList')) ? JSON.parse(localStorage.getItem('toDoList')) : {
+      active: [],
+      completed: []
+    };
 
-// UPDATE BADGE COUNT
-updateBadge();
-
-
-// DISPLAY TO DO LIST
-showToDoList();
+    // UPDATE BADGE COUNT
+    updateBadge();
 
 
-
-// UPDATE BADGE COUNT
-function updateBadge(){
-	document.getElementById('badge-active').innerHTML = data.active.length - data.completed.length;
-	document.getElementById('badge-completed').innerHTML = data.completed.length;
-}
+    // DISPLAY TO DO LIST
+    showToDoList();
 
 
-// ADD ITEM
-document.getElementById('btn-Add').addEventListener('click', function (e) {
 
-  e.preventDefault();  // stops the default action, prevent a submit button from submitting a form, stops page from re-loading
-  
-  let item = document.getElementById("newItem").value;
-
-  if (item === '') {
-	document.getElementById('helpText').style.visibility = "visible"; 
-  } else {
-  
-  	document.getElementById('helpText').style.visibility = "hidden"; 
-  	
-	// update localStorage
-	storeItem(item);
-
-	// create item
-	addItemToDOM(item);
-  }
-  
-  document.getElementById("newItem").value = '';
-  document.getElementById('newItem').focus();
-  
-  showToDoList();
-  
-});
+    // UPDATE BADGE COUNT
+    function updateBadge() {
+      document.getElementById('badge-active').innerHTML = data.active.length - data.completed.length;
+      document.getElementById('badge-completed').innerHTML = data.completed.length;
+    }
 
 
-// ADD TO DOM
-// Create a new list item(s) when clicking on the "Add" button / opening browser
-function addItemToDOM(item) {
+    // ADD ITEM
+    document.getElementById('btn-Add').addEventListener('click', function (e) {
 
-  const li = document.createElement('li');
-  li.textContent = item;
-  li.addEventListener('click', function(e) {
-  	completeItem(e.target.textContent, e.target);
-  	});
-  list.appendChild(li);
+      e.preventDefault();  // stops the default action, prevent a submit button from submitting a form, stops page from re-loading
 
-  if (li.textContent === list.firstElementChild.textContent) {
-	li.className = 'list-group-item list-group-item-primary';
-  } else {
-	li.className = 'list-group-item';
-  }
-  
-  // add completed styling if item is in the completed array
-  if(data.completed.includes(li.textContent)){
-	li.className += ' completed';
-  }
+      let item = document.getElementById("newItem").value;
 
-  // Create a "delete" button and append it to each list item
-  let btnDelete = document.createElement("span");
-  let deleteTxt = document.createTextNode("\u00D7");	// small x
-  btnDelete.className = "btn-Delete";
-  btnDelete.appendChild(deleteTxt);
-  btnDelete.addEventListener('click', deleteItem);
-  
-  li.appendChild(btnDelete);
+      if (item === '') {
+        document.getElementById('helpText').style.visibility = "visible";
+      } else {
 
-}
+        document.getElementById('helpText').style.visibility = "hidden";
+
+        // update localStorage
+        storeItem(item);
+
+        // create item
+        addItemToDOM(item);
+      }
+
+      document.getElementById("newItem").value = '';
+      document.getElementById('newItem').focus();
+
+      showToDoList();
+
+    });
 
 
-// STORE ITEM
-function storeItem(item) {
-  data.active.push(item);
-  dataObjectUpdate();
-  updateBadge();
-}
+    // ADD TO DOM
+    // Create a new list item(s) when clicking on the "Add" button / opening browser
+    function addItemToDOM(item) {
+
+      const li = document.createElement('li');
+      li.textContent = item;
+      li.addEventListener('click', function (e) {
+        completeItem(e.target.textContent, e.target);
+      });
+      list.appendChild(li);
+
+      if (li.textContent === list.firstElementChild.textContent) {
+        li.className = 'list-group-item list-group-item-primary';
+      } else {
+        li.className = 'list-group-item';
+      }
+
+      // add completed styling if item is in the completed array
+      if (data.completed.includes(li.textContent)) {
+        li.className += ' completed';
+      }
+
+      // Create a "delete" button and append it to each list item
+      let btnDelete = document.createElement("span");
+      let deleteTxt = document.createTextNode("\u00D7");	// small x
+      btnDelete.className = "btn-Delete";
+      btnDelete.appendChild(deleteTxt);
+      btnDelete.addEventListener('click', deleteItem);
+
+      li.appendChild(btnDelete);
+
+    }
 
 
-// SHOW TO DO LIST
-function showToDoList() {
-  if (!data.active.length) {
-	list.innerHTML = '<li class="list-group-item list-group-item-primary">Create a to do list</li>';
-  } else {
-	list.innerHTML = '<li class="list-group-item list-group-item-primary">To Do list</li>';
-	data.active.forEach(item => {
-	  addItemToDOM(item);
-	});
-  }
-}
+    // STORE ITEM
+    function storeItem(item) {
+      data.active.push(item);
+      dataObjectUpdate();
+      updateBadge();
+    }
 
 
-// UPDATE DATA OBJECT
-function dataObjectUpdate() {
-  localStorage.setItem('toDoList', JSON.stringify(data));
-}
+    // SHOW TO DO LIST
+    function showToDoList() {
+      if (!data.active.length) {
+        list.innerHTML = '<li class="list-group-item list-group-item-primary">Create a to do list</li>';
+      } else {
+        list.innerHTML = '<li class="list-group-item list-group-item-primary">To Do list</li>';
+        data.active.forEach(item => {
+          addItemToDOM(item);
+        });
+      }
+    }
 
 
-// DELETE ITEM
-// remove LI from localStorage & to do list
-function deleteItem() {
-
-  // remove delete "x" from end of string
-  let item = this.parentNode.textContent;
-  item = item.split('').slice(0,-1).join('');
-  
-  let parent = this.parentNode;
- 
-  // find index of item
-  let idx_active = data.active.indexOf(item);
-  let idx_completed = data.completed.indexOf(item);
-
-  // remove 1 item at that index
-  	if(idx_active !== -1){
-	data.active.splice(idx_active, 1);
-	}
-	if(idx_completed !== -1){
-		data.completed.splice(idx_completed, 1);
-	}
+    // UPDATE DATA OBJECT
+    function dataObjectUpdate() {
+      localStorage.setItem('toDoList', JSON.stringify(data));
+    }
 
 
-  dataObjectUpdate();
-  parent.remove();
+    // DELETE ITEM
+    // remove LI from localStorage & to do list
+    function deleteItem() {
 
-  updateBadge();
-  
-  showToDoList();
-}
+      // remove delete "x" from end of string
+      let item = this.parentNode.textContent;
+      item = item.split('').slice(0, -1).join('');
 
-// COMPLETE ITEM
-// add complete styling & add item to complete array
-// this function will also be called after clicking the delete'x' b/c the eventListener is on the LI and so when you click on an LI 1st the deleteItem will happen and then the completeItem will happen
-function completeItem(item, parent) {
+      let parent = this.parentNode;
 
-   if(item === '\u00D7') return;  // if get here b/c clicked delete x then stop
-   
-  parent.classList.toggle('completed');
-  
-  // remove delete "x" from end of string
-  item = item.split('').slice(0,-1).join('');
-	
-  if(data.completed.includes(item)){
-  	data.completed.splice(data.completed.indexOf(item), 1);
-  } else {
-  	data.completed.push(item);
-  }
-  
-  dataObjectUpdate();
-  
-  updateBadge();
-}
+      // find index of item
+      let idx_active = data.active.indexOf(item);
+      let idx_completed = data.completed.indexOf(item);
+
+      // remove 1 item at that index
+      if (idx_active !== -1) {
+        data.active.splice(idx_active, 1);
+      }
+      if (idx_completed !== -1) {
+        data.completed.splice(idx_completed, 1);
+      }
 
 
-// DELETE ALL ITEMS event listener
-document.getElementById('btn-deleteAll').addEventListener('click',  deleteAll);
+      dataObjectUpdate();
+      parent.remove();
 
-// DELETE ALL in localStorage
-function deleteAll() {
-   localStorage.clear();
-   location.reload();
-}
+      updateBadge();
+
+      showToDoList();
+    }
+
+    // COMPLETE ITEM
+    // add complete styling & add item to complete array
+    // this function will also be called after clicking the delete'x' b/c the eventListener is on the LI and so when you click on an LI 1st the deleteItem will happen and then the completeItem will happen
+    function completeItem(item, parent) {
+
+      if (item === '\u00D7') return;  // if get here b/c clicked delete x then stop
+
+      parent.classList.toggle('completed');
+
+      // remove delete "x" from end of string
+      item = item.split('').slice(0, -1).join('');
+
+      if (data.completed.includes(item)) {
+        data.completed.splice(data.completed.indexOf(item), 1);
+      } else {
+        data.completed.push(item);
+      }
+
+      dataObjectUpdate();
+
+      updateBadge();
+    }
+
+
+    // DELETE ALL ITEMS event listener
+    document.getElementById('btn-deleteAll').addEventListener('click', deleteAll);
+
+    // DELETE ALL in localStorage
+    function deleteAll() {
+      localStorage.clear();
+      location.reload();
+    }
 
 /*
 ALTERNATIVE WAY TO DO CompleteItem
@@ -427,8 +427,8 @@ li.addEventListener('click', function(e) {
   	});
 
 in 	function addItemToDOM(item) {...
-  	
-  	
+
+
 // strikethrough when click on a list item
     // do not strikethrough when click on 1st list item
     // e.target.firstElementChild == 'x' from the close button
@@ -446,4 +446,5 @@ in 	function addItemToDOM(item) {...
 */
   </script>
 </body>
+
 </html>
