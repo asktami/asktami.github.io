@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="jQuery Javascript To Do List">
   <meta name="author" content="Tami Williams">
-  <link rel="shortcut icon" href="">
-
+  <link rel="shortcut icon" href="about:blank">
 
   <title>jQuery To Do List</title>
 
@@ -81,16 +80,17 @@ code {
   }
 
 
-/* When clicked on, change background color, strike out text and add a "checked" mark */
-#list li.checked:not(:first-child) {
+/* When clicked on, change background color, strike out text and add a "completed" mark */
+#list li.completed:not(:first-child) {
     font-weight: 900;
     color: #f44336;
     text-decoration: line-through;
 }
 
 
-/* Add a "checked" mark when clicked on */
-ul li.checked::before {
+/* Add a "completed" mark when clicked on */
+/* "completed" styling */
+ul li.completed::before {
     content: '';
     position: absolute;
     border-color: #888;
@@ -103,22 +103,24 @@ ul li.checked::before {
     width: 7px;
 }
 
-/* Style the close button */
-.btn-Close {
+/* Style the delete button */
+.btn-Delete {
     position: absolute;
     right: 0;
     top: 0;
     padding: 12px 16px 12px 16px;
 }
 
-.btn-Close:hover {
+.btn-Delete:hover {
     background-color: #f44336;
     color: white;
 }
 
-.helpText {
-	display: none;
+
+#helpText {
+	visibility: hidden;
 }
+
 </style>
 </head>
 
@@ -127,7 +129,7 @@ ul li.checked::before {
   <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">Javascript To Do Lists</a>
+      <a class="navbar-brand" href="https://asktami.github.io/">GitHub</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -148,7 +150,19 @@ ul li.checked::before {
 
   <main role="main" class="container">
 
-    <h1>To Do List - INCOMPLETE<span id="badge" class="badge badge-info"></span></h1>
+    <h1>To Do List 
+    <button type="button" class="btn btn-info">
+  Active <span id="badge-active" class="badge badge-light"></span>
+  <span class="sr-only">active items</span>
+</button>
+
+<button type="button" class="btn btn-info">
+  Completed <span id="badge-completed" class="badge badge-light"></span>
+  <span class="sr-only">completed items</span>
+</button>
+
+    
+    </h1>
     <h2>Using jQuery and LocalStorage</h2>
     <p class="lead">LocalStorage: data with no expiration date that will persist after the browser window is closed.</p>
 
@@ -164,11 +178,11 @@ ul li.checked::before {
           <input id="newItem" class="form-control" type="text" placeholder="enter new task">
         </div>
 
-        <div class="col-3">
+        <div class="col-1">
           <button type="submit" class="btn btn-primary" id="btn-Add">Add</button>
         </div>
 
-        <div class="col-2">
+        <div class="col-4">
           <button type="button" class="btn btn-danger" id="btn-deleteAll">Delete All</button>
         </div>
       </div>
@@ -176,7 +190,7 @@ ul li.checked::before {
 
       <div class="form-row">
         <div class="col-7">
-          <small id="helpText" class="form-text text-muted" aria-describedby="newItem"></small>
+          <small id="helpText" class="form-text text-muted" aria-describedby="newItem">You must write something!</small>
         </div>
       </div>
 
@@ -187,8 +201,8 @@ ul li.checked::before {
 
     <ul id="list" class="list-group"></ul>
 
+      <p>&nbsp;</p>
   </main><!-- end main -->
-
 
 
   <footer class="footer text-muted">
@@ -196,7 +210,7 @@ ul li.checked::before {
       <p class="float-right">
         <a href="#">Back to top</a>
       </p>
-      <p>Created by Tami Williams, 9/2018 <a href="http://www.asktami.com">asktami.com</a></p>
+      <p>Created by Tami Williams, 11/2018 <a href="http://www.asktami.com">asktami.com</a></p>
     </div><!-- end container -->
   </footer><!-- end footer -->
 
@@ -212,6 +226,7 @@ ul li.checked::before {
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
     crossorigin="anonymous"></script>
 
+
   <!-- jQuery local fallback -->
   <script>window.jQuery || document.write('<script src="assets/js/jquery-3.3.1.slim.min.js"><\/script>')</script>
 
@@ -220,13 +235,213 @@ ul li.checked::before {
 
   <!-- Bootstrap CSS local fallback -->
   <script>
-    $(document).ready(function () {
+    $(function () {
       let bodyColor = $('body').css('color');
       if (bodyColor != 'rgb(51, 51, 51)') {
         $("head").prepend('<link rel="stylesheet" href="assets/css/bootstrap.min.css">');
       }
     });
+
+
+// GLOBAL VARIABLES
+const list = $('#list');
+let data = (localStorage.getItem('toDoList')) ? JSON.parse(localStorage.getItem('toDoList')):{
+active: [],
+completed: []
+};
+
+// UPDATE BADGE COUNT
+updateBadge();
+
+
+// DISPLAY TO DO LIST
+showToDoList();
+
+
+
+// UPDATE BADGE COUNT
+function updateBadge(){
+	$('#badge-active').html(data.active.length - data.completed.length);
+	$('#badge-completed').html(data.completed.length);
+}
+
+
+// ADD ITEM
+$('#btn-Add').click(function (e) {
+
+  e.preventDefault();  // stops the default action, prevent a submit button from submitting a form, stops page from re-loading
+  
+  let item = $('#newItem').val();
+
+  if (item === '') {
+	$('#helpText').css({'visibility':'visible'}); 
+  } else {
+  
+	$('#helpText').css({'visibility':'hidden'}); 
+  	
+	// update localStorage
+	storeItem(item);
+
+	// create item
+	addItemToDOM(item);
+  }
+  
+  	$('#newItem').val('');
+	$('#newItem').focus();
+  
+    showToDoList();
+});
+
+
+// ADD TO DOM
+// Create a new list item(s) when clicking on the "Add" button / opening browser
+function addItemToDOM(item) {
+
+  const li = $('<li>');
+  li.text(item);
+  li.click(function(e) {
+  	completeItem($(e.target).text(), $(e.target));
+  	});
+  list.append(li);
+
+  if (li.text() === list.first().text()) {
+	li.toggleClass('list-group-item list-group-item-primary');
+  } else {
+	li.toggleClass('list-group-item');
+  }
+  
+  // add completed styling if item is in the completed array
+  if(data.completed.includes(li.text())){
+	li.addClass('completed');
+  }
+
+  // Create a "delete" button and append it to each list item
+  let btnDelete = $('<span>');
+  btnDelete.text('\u00D7');	// small x
+  btnDelete.toggleClass('btn-Delete');
+  btnDelete.click(deleteItem);
+  
+  li.append(btnDelete);
+
+}
+
+
+// STORE ITEM
+function storeItem(item) {
+  data.active.push(item);
+  dataObjectUpdate();
+  updateBadge();
+}
+
+
+// SHOW TO DO LIST
+function showToDoList() {
+  if (!data.active.length) {
+	list.html('<li class="list-group-item list-group-item-primary">Create a to do list</li>');
+  } else {
+	list.html('<li class="list-group-item list-group-item-primary">To Do list</li>');
+	data.active.forEach(item => {
+	  addItemToDOM(item);
+	});
+  }
+}
+
+
+// UPDATE DATA OBJECT
+function dataObjectUpdate() {
+  localStorage.setItem('toDoList', JSON.stringify(data));
+}
+
+
+// DELETE ITEM
+// remove LI from localStorage & to do list
+function deleteItem() {
+
+  // remove delete "x" from end of string
+  let item = $(this).parent().text();
+  item = item.split('').slice(0,-1).join('');
+  
+  let parent = $(this).parent();
+ 
+  // find index of item
+  let idx_active = data.active.indexOf(item);
+  let idx_completed = data.completed.indexOf(item);
+
+  // remove 1 item at that index
+  	if(idx_active !== -1){
+	data.active.splice(idx_active, 1);
+	}
+	if(idx_completed !== -1){
+		data.completed.splice(idx_completed, 1);
+	}
+
+
+  dataObjectUpdate();
+  parent.remove();
+
+  updateBadge();
+  
+  showToDoList();
+}
+
+// COMPLETE ITEM
+// add complete styling & add item to complete array
+// this function will also be called after clicking the delete'x' b/c the eventListener is on the LI and so when you click on an LI 1st the deleteItem will happen and then the completeItem will happen
+function completeItem(item, parent) {
+
+   if(item === '\u00D7') return;  // if get here b/c clicked delete x then stop
+   
+  parent.toggleClass('completed');
+  
+  // remove delete "x" from end of string
+  item = item.split('').slice(0,-1).join('');
+	
+  if(data.completed.includes(item)){
+  	data.completed.splice(data.completed.indexOf(item), 1);
+  } else {
+  	data.completed.push(item);
+  }
+  
+  dataObjectUpdate();
+  
+  updateBadge();
+}
+
+
+// DELETE ALL ITEMS event listener
+$('#btn-deleteAll').click(deleteAll);
+
+// DELETE ALL in localStorage
+function deleteAll() {
+   localStorage.clear();
+   location.reload();
+}
+
+/*
+ALTERNATIVE WAY TO DO CompleteItem
+If done this way would NOT have:
+li.addEventListener('click', function(e) {
+  	completeItem(e.target.textContent, e.target);
+  	});
+
+in 	function addItemToDOM(item) {...
+  	
+  	
+// strikethrough when click on a list item
+    // do not strikethrough when click on 1st list item
+    // e.target.firstElementChild == 'x' from the close button
+    // e.target.firstChild.textContent = to do list item text
+    // e.target = a reference to the object that dispatched the event
+    // && e.target.firstElementChild  = if not null, i.e. when has x for closed, then add checked
+    // e.target !== list.firstChild means e.target is NOT the 1st LI
+    list.addEventListener('click', function (e) {
+      if (e.target.tagName === 'LI' && e.target !== list.firstChild) {
+        let listItem = e.target;
+        listItem.classList.toggle('checked');
+      }
+
+    }, false);
+*/
   </script>
 </body>
-
 </html>

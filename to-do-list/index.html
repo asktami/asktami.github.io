@@ -153,12 +153,12 @@ ul li.completed::before {
     <h1>To Do List 
     <button type="button" class="btn btn-info">
   Active <span id="badge-active" class="badge badge-light"></span>
-  <span class="sr-only">unread messages</span>
+  <span class="sr-only">active items</span>
 </button>
 
 <button type="button" class="btn btn-info">
   Completed <span id="badge-completed" class="badge badge-light"></span>
-  <span class="sr-only">unread messages</span>
+  <span class="sr-only">completed items</span>
 </button>
 
     
@@ -201,8 +201,8 @@ ul li.completed::before {
 
     <ul id="list" class="list-group"></ul>
 
+      <p>&nbsp;</p>
   </main><!-- end main -->
-
 
 
   <footer class="footer text-muted">
@@ -222,6 +222,8 @@ ul li.completed::before {
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
     crossorigin="anonymous"></script>
 
 
@@ -275,6 +277,8 @@ document.getElementById('btn-Add').addEventListener('click', function (e) {
 	document.getElementById('helpText').style.visibility = "visible"; 
   } else {
   
+  	document.getElementById('helpText').style.visibility = "hidden"; 
+  	
 	// update localStorage
 	storeItem(item);
 
@@ -284,6 +288,8 @@ document.getElementById('btn-Add').addEventListener('click', function (e) {
   
   document.getElementById("newItem").value = '';
   document.getElementById('newItem').focus();
+  
+  showToDoList();
   
 });
 
@@ -319,11 +325,6 @@ function addItemToDOM(item) {
   
   li.appendChild(btnDelete);
 
-  // clear input
-  item = "";
-
-  // return LI, item + css
-  return li;
 }
 
 
@@ -340,7 +341,7 @@ function showToDoList() {
   if (!data.active.length) {
 	list.innerHTML = '<li class="list-group-item list-group-item-primary">Create a to do list</li>';
   } else {
-	list.innerHTML = '<li class="list-group-item list-group-item-primary">To do list</li>';
+	list.innerHTML = '<li class="list-group-item list-group-item-primary">To Do list</li>';
 	data.active.forEach(item => {
 	  addItemToDOM(item);
 	});
@@ -381,6 +382,8 @@ function deleteItem() {
   parent.remove();
 
   updateBadge();
+  
+  showToDoList();
 }
 
 // COMPLETE ITEM
@@ -443,5 +446,4 @@ in 	function addItemToDOM(item) {...
 */
   </script>
 </body>
-
 </html>
