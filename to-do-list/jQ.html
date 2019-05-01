@@ -140,7 +140,7 @@ ul li.completed::before {
             <a class="nav-link" href="index.html">Vanilla JS</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="index.html">jQuery</a>
+            <a class="nav-link" href="jQ.html">jQuery</a>
           </li>
         </ul>
       </div>
@@ -245,7 +245,7 @@ ul li.completed::before {
 
 // GLOBAL VARIABLES
 const list = $('#list');
-let data = (localStorage.getItem('toDoList')) ? JSON.parse(localStorage.getItem('toDoList')):{
+let data = (localStorage.getItem('toDoList')) ? JSON.parse(localStorage.getItem('toDoList')) : {
 active: [],
 completed: []
 };

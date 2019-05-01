@@ -1,0 +1,190 @@
+<!-- from 
+https://github.com/chiefoleka/simple-vue-todo-with-localstorage
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>My Simple To Do List</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/medium-editor/latest/css/medium-editor.min.css">
+</head>
+<style type="text/css">
+	.center {
+		display: table;
+		margin: 0 auto;
+		width: 900px;
+	}
+	.center-text {
+		text-align: center;
+	}
+	.close {
+		background: none;
+		border: 0.5px solid green;
+		border-radius: 50%;
+		padding: 1.5px 6px 3px 6px;
+		float: right;
+		color: green;
+		transition: 0.4s;
+	}
+	.close:hover {
+		background-color: green;
+		color:#fff;
+		transition: 0.4s;
+	}
+	.complete {
+		text-decoration: line-through;
+	}
+	li {
+		list-style-type: none;
+	}
+	ol li {
+		margin-left: -40px;
+	}
+	.task {
+		padding: 10px;
+		border: 0.5px solid #eee;
+		margin-bottom: 5px;
+	}
+	.task:hover {
+		border-bottom: 3px solid green;
+		background-color: rgba(0,200,0,0.1);
+	}
+	.todo {
+		width: 400px;
+		margin-right: 50px;
+		float: left;
+	}
+	.notes {
+		width: 450px;
+		float: left;
+	}
+	.notes div {
+		width: 450px;
+		height: 400px;
+		overflow: scroll;
+	}
+	.notes div:hover {
+		border: none;
+	}
+	.notes div:active {
+		border: none;
+	}
+	.clear-all {
+		border-radius: 0;
+		background-color: green;
+		border: none;
+		color: white;
+		padding-top: 3px;
+		padding-bottom: 3px;
+	}
+</style>
+<body>
+	<div id="app" class="center">
+		<h1 class="center-text">Your simple task manager</h1>
+		<br>
+		<div class="todo">
+		  	<label class="center-text">Todos: <input type="text" v-model="newTasks" @keyup.enter="addTask" style="width: 250px; margin-left: 20px " placeholder="What do you need to do?"><input type="button" class="clear-all" value="Clear All" style="float: right" @click="clearAll"></label> 
+			<hr />
+			<draggable v-model="tasks" @change="updateList">
+	    		<li v-for="(todo,index) in tasks" class="task" :key="index">
+		      		<input type="checkbox" v-model="todo.completed" @click="complete(todo)"> <span v-bind:class="{complete: todo.completed}">{{index+1}}. {{ todo.task }}</span> <button @click="removeTask(todo)" class="close">x</button>
+		   		</li>
+		  	</draggable>
+		</div>
+		<div class="notes">
+			<label class="center-text">Note</label>
+			<hr />
+			<medium-editor :text='notes' :options='options' v-on:edit='addNote' custom-tag='div'>
+          </medium-editor>
+		</div>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.js"></script>
+<script src="https://cdn.rawgit.com/FranzSkuffka/vue-medium-editor/0.1.0/dist/vueMediumEditor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/15.0.0/vuedraggable.min.js"></script>
+<script type="text/javascript">
+	options = {
+      toolbar: {buttons: ['bold', 'italic', 'underline', 'strikethrough', 'h1', 'h2', 'h3', 'quote', 'unorderedlist']},
+      placeholder: false
+    }
+	var app = new Vue({
+	  	el: '#app',
+	  	data: {
+	  		options: options,
+	    	newTasks : "",
+	    	tasks : [],
+	    	notes : "",
+	    	temp : ""
+	  	},
+	  	components: {
+		    'medium-editor': vueMediumEditor.default,
+		},
+	  	methods : {
+	  		init(){
+	  			Storage.prototype.setObj = function(key, obj) {
+				    return this.setItem(key, JSON.stringify(obj))
+				}
+				Storage.prototype.getObj = function(key) {
+				    return JSON.parse(this.getItem(key))
+				}
+				var storedTasks = localStorage.getObj('tasks')
+				var notes = localStorage.getItem('notes');
+				if(Array.isArray(storedTasks)) {
+					storedTasks.forEach(function(task) {
+						this.tasks.push(task)
+					}.bind(this))
+				}
+				if(notes !== null) {
+					this.notes = notes
+				}
+	  		},
+	  		addTask : function(){
+	  			var blob = {
+	  				task : this.newTasks,
+	  				completed : false
+	  			}
+	  			this.tasks.push(blob)
+	  			this.storeLocally(blob)
+	  			this.newTasks = ""
+	  		},
+	  		complete : function(todo){
+	  			var task = localStorage.getObj('tasks')
+	  			task[this.tasks.indexOf(todo)].completed = !task[this.tasks.indexOf(todo)].completed
+	  			localStorage.setObj('tasks', task)
+	  		},
+	  		updateList : function(){
+	  			localStorage.setObj('tasks', this.tasks)
+	  		},
+	  		clearAll : function(){
+	  			var result = confirm(`Are you sure you want to delete all todos?`) 
+	  			if(result){
+		  			this.tasks = []
+		  			localStorage.setObj('tasks', [])
+		  		}
+	  		},
+	  		removeTask : function(todo) {
+	  			var result = confirm(`Are you sure you want to delete ${todo}?`) 
+	  			if(result){
+		  			var storedTasks = Array.isArray(localStorage.getObj('tasks'))?localStorage.getObj('tasks'): []
+		  			this.tasks.splice(this.tasks.indexOf(todo),1)
+		  			storedTasks.splice(storedTasks.indexOf(todo),1)
+		  			localStorage.setObj('tasks', storedTasks)
+		  		}
+	  		},
+	  		addNote : function(operation){
+	  			this.notes = operation.api.origElements.innerHTML
+	  			localStorage.setItem('notes', this.notes)
+	  		},
+	  		storeLocally: function(task) {
+	  			var tasks = Array.isArray(localStorage.getObj('tasks'))?localStorage.getObj('tasks'): []
+	  			tasks.push(task)
+				localStorage.setObj('tasks', tasks)
+	  		}
+	  	},
+	  	mounted() {
+	  		this.init();
+	  	}
+	})
+</script>
+</html>
