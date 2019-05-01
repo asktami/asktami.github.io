@@ -7,3 +7,5 @@
 # jQuery
 
 [To Do List](https://asktami.github.io/to-do-list/jQ.html)
+
+[Shopping List](https://asktami.github.io/shopping-list/)
