@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Quiz</title>
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto"
+			rel="stylesheet"
+		/>
+
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header role="header">
+			<h1>Javascript Quiz</h1>
+		</header>
+		
+		<img class="logo" src="javascript-logo.svg" alt="logo" />
+		
+		<main role="content" class="js-container">
+		
+			<span role="welcomemessage" class="message js-message"></span>
+			<span role="reviewbtn" class="message js-review"></span>
+			<div role="quizcontainer" class="quiz-container js-quiz-container"></div>
+		</main>
+		
+		<footer role="footer">
+			Created by Tami Williams. Find out more about me at
+			<a href="http://www.asktami.com" target="_blank">www.asktami.com</a>
+		</footer>
+
+		<!-- jQuery CDN -->
+		<script
+			src="https://code.jquery.com/jquery-3.4.0.min.js"
+			integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+			crossorigin="anonymous"
+		></script>
+		<script src="index.js"></script>
+	</body>
+</html>

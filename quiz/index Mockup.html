@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Quiz</title>
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto"
+			rel="stylesheet"
+		/>
+
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+	<header>
+		<h1>Javascript Quiz</h1>
+	</header>
+	
+	<main>
+	<img class="logo" src="javascript-logo.svg" alt="logo">
+	
+	<div class="message">
+		<h2>Welcome to the Javascript Quiz</h2>
+		<button type="button" class="start">Start Quiz</button>
+	</div>
+	
+	
+		<div class="js-quiz-container">
+		
+		<div class="banner">
+			<span class="js-questionsAnswered">Question # out of #</span>
+			<span class="js-score">X correct out of Y</span>
+		</div>
+		
+		<form id="quiz-form" name="quiz-form" action="index.html" method="post">
+		
+		 <fieldset>
+			<legend>
+			  <h3><span>#. </span>Question Question Question Question Question Question Question</h3>
+			</legend>
+			
+			<ul class="answers">
+				<li data-item-id="1">
+             	<input type="radio" name="answer" id="question_1"  value="answer_letter" required>
+             	<label for="question_1">answer-letter-1:  answer_text-1>answer-letter-1:  answer_text-1</label>
+             	</li>
+           		
+           		<li>
+             	<input type="radio" name="answer" id="question_2" value="answer_letter">
+             	<label for="question_2">answer-letter-2:  answer_text-2</label>
+           		</li>
+           		
+			</ul>
+			
+			<div class="explanation">explanation</div>
+			<button class="submit" type="submit">Submit</button>
+			
+			</fieldset>
+			</form>
+		</div>
+	</main>
+	
+	<footer>
+	Created by Tami Williams.
+	Find out more about me at <a href="http://www.asktami.com" target="_blank">www.asktami.com</a>
+	</footer>
+	
+
+		<!-- jQuery CDN -->
+		<script
+			src="https://code.jquery.com/jquery-3.4.0.min.js"
+			integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+			crossorigin="anonymous"
+		></script>
+		<!--
+		<script src="index.js"></script>
+		-->
+	</body>
+</html>
